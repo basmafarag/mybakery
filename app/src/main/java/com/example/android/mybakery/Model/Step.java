@@ -5,14 +5,14 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class Steps implements Serializable {
+public class Step implements Serializable {
     private int id;
     private String shortDescription;
     private String description;
     private String videoURL;
     private String thumbnailURL;
 
-    public Steps() {
+    public Step() {
     }
     @Override
     public String toString() {

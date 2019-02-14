@@ -1,7 +1,6 @@
 package com.example.android.mybakery.Adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,20 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.android.mybakery.Model.Recipes;
+import com.example.android.mybakery.Model.Recipe;
 import com.example.android.mybakery.R;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import com.example.android.mybakery.Recipe.MainActivity;
-import com.squareup.picasso.Picasso;
 
-import static android.provider.Settings.System.getString;
+import com.squareup.picasso.Picasso;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder> {
 
-    public static List<Recipes> recipes;
+    public static List<Recipe> recipes;
     private static RecipesOnClickHandler recipesOnClickHandler;
 
     public RecipesAdapter( RecipesOnClickHandler recipesOnClickHandler) {
@@ -45,7 +40,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
     @Override
     public void onBindViewHolder(@NonNull RecipesViewHolder holder, int position) {
-        Recipes recipe = recipes.get(position);
+        Recipe recipe = recipes.get(position);
         holder.recipeTitleTextView.setText(recipe.getName());
         String recipeImage = recipe.getImage().isEmpty() ? null : recipe.getImage();
         Picasso.get().load(recipeImage).placeholder(R.drawable.dessert)
@@ -59,7 +54,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
     public interface RecipesOnClickHandler {
 
-        void onClick(Recipes recipe);
+        void onClick(Recipe recipe);
     }
 
     public static class RecipesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -79,7 +74,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            Recipes recipe = recipes.get(adapterPosition);
+            Recipe recipe = recipes.get(adapterPosition);
             recipesOnClickHandler.onClick(recipe);
         }
     }

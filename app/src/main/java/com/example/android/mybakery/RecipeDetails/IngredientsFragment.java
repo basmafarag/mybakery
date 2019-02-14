@@ -9,15 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.mybakery.Adapter.IngredientsAdapter;
-import com.example.android.mybakery.Model.Ingredients;
-import com.example.android.mybakery.Model.Recipes;
+import com.example.android.mybakery.Model.Recipe;
 import com.example.android.mybakery.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class IngredientsFragment extends Fragment {
-        Recipes recipe;
+        Recipe recipe;
 
 
     public IngredientsFragment() {

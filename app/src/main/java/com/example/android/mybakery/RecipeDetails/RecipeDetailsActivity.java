@@ -4,31 +4,27 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.android.mybakery.Model.Recipes;
+import com.example.android.mybakery.Model.Recipe;
 import com.example.android.mybakery.R;
 import android.content.Intent;
 import android.util.Log;
 
-import java.util.List;
 import java.util.ArrayList;
-
-import static com.example.android.mybakery.R.string.hello_blank_fragment;
-import static com.example.android.mybakery.R.string.recipes_tag;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
 
     static String STACK_RECIPE_DETAIL="STACK_RECIPE_DETAIL";
 
     static String SELECTED_RECIPES="Selected_Recipes";
-    private ArrayList<Recipes> recipe;
+    private ArrayList<Recipe> recipe;
 
-    public Recipes mrecipe;
+    public Recipe mrecipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
         if(intent.hasExtra(getString(R.string.recipes_tag))){
-            mrecipe = (Recipes) intent.getSerializableExtra(getString(R.string.recipes_tag));
+            mrecipe = (Recipe) intent.getSerializableExtra(getString(R.string.recipes_tag));
             Log.d("lalala", String.valueOf(mrecipe));
 
         }
@@ -51,6 +47,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+
         super.onSaveInstanceState(outState);
     }
 }

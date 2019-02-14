@@ -11,11 +11,10 @@ import android.view.View;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.ProgressBar;
 
-import com.example.android.mybakery.Adapter.IngredientsAdapter;
 import com.example.android.mybakery.RecipeDetails.RecipeDetailsActivity;
 import com.example.android.mybakery.retrofit.ApiService;
 import com.example.android.mybakery.retrofit.RetroClient;
-import com.example.android.mybakery.Model.Recipes;
+import com.example.android.mybakery.Model.Recipe;
 
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     ProgressBar mProgressBar;
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeContainer;
-    private List<Recipes> recipes;
+    private List<Recipe> recipes;
 
 
     @Override
@@ -56,24 +55,26 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
             mProgressBar.setVisibility(View.VISIBLE);
             //----------------------getRecipes------------------------------
             ApiService apiService = RetroClient.getApiService();
-            Call<List<Recipes>> call = apiService.getRecipes();
-            call.enqueue(new Callback<List<Recipes>>() {
+            Call<List<Recipe>> call = apiService.getRecipes();
+            call.enqueue(new Callback<List<Recipe>>() {
                 @Override
-                public void onResponse(@NonNull Call<List<Recipes>> call, @NonNull Response<List<Recipes>> response) {
+                public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                     recipes = response.body();
+                    Log.d("recipesss", String.valueOf(recipes));
+
                     RecipesAdapter.recipes = recipes;
                     updateRecipesViewsOnSuccess();
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<List<Recipes>> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
                     Log.e(this.getClass().getSimpleName(), t.toString());
                     updateRecipesViewsOnFailure();
                 }
             });
             //------------------------getRecipes-----------------------------
         } else {
-            recipes = (List<Recipes>) savedInstanceState.getSerializable(getString(R.string.recipes_tag));
+            recipes = (List<Recipe>) savedInstanceState.getSerializable(getString(R.string.recipes_tag));
 
         }
 
@@ -90,10 +91,10 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     }
     private void getRecipes() {
         ApiService apiService = RetroClient.getApiService();
-        Call<List<Recipes>> call = apiService.getRecipes();
-        call.enqueue(new Callback<List<Recipes>>() {
+        Call<List<Recipe>> call = apiService.getRecipes();
+        call.enqueue(new Callback<List<Recipe>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Recipes>> call, @NonNull Response<List<Recipes>> response) {
+            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                 recipes = response.body();
                 RecipesAdapter.recipes = recipes;
                 //Log.d("recipesss", String.valueOf(recipes));
@@ -102,14 +103,14 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Recipes>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
                 Log.e(this.getClass().getSimpleName(), t.toString());
                 updateRecipesViewsOnFailure();
             }
         });
     }
     @Override
-    public void onClick(Recipes recipe) {
+    public void onClick(Recipe recipe) {
         Log.d("recipeeee", String.valueOf(recipe));
         Intent intent = new Intent(MainActivity.this, RecipeDetailsActivity.class);
         intent.putExtra(getString(R.string.recipes_tag), recipe);

@@ -8,16 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.mybakery.Model.Ingredients;
-import com.example.android.mybakery.Model.Recipes;
+import com.example.android.mybakery.Model.Ingredient;
+import com.example.android.mybakery.Model.Recipe;
 import com.example.android.mybakery.R;
-import com.example.android.mybakery.RecipeDetails.RecipeDetailsActivity;
 
 import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
 
-    public static List<Ingredients> ingredients;
+    public static List<Ingredient> ingredients;
     private Context context;
 
 
@@ -25,8 +24,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
 
 
-    public IngredientsAdapter(Recipes recipe) {
-        ingredients=recipe.getIngredientsList();
+    public IngredientsAdapter(Recipe recipe) {
+        ingredients=recipe.getIngredientList();
 
     }
 

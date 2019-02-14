@@ -4,20 +4,31 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Expose;
 
-public class Ingredients implements Serializable{
+public class Ingredient implements Serializable{
+
+    @SerializedName("quantity")
+    @Expose
     private double quantity;
+
+    @SerializedName("measure")
+    @Expose
     private String measure;
+
+    @SerializedName("ingredient")
+    @Expose
     private String ingredient;
 
-    public Ingredients() {
+    public Ingredient() {
     }
 
     @Override
     public String toString() {
         return "Ingredient{" +
                 "quantity=" + quantity +
-                ", measure='" + measure + '\'' +
+                ", meassure='" + measure + '\'' +
                 ", ingredient='" + ingredient + '\'' +
                 '}';
     }

@@ -4,10 +4,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import com.example.android.mybakery.Model.Recipes;
+import com.example.android.mybakery.Model.Recipe;
 
 public interface ApiService {
     @GET("/topher/2017/May/59121517_baking/baking.json")
-    Call<List<Recipes>> getRecipes();
+    Call<List<Recipe>> getRecipes();
 
 }
