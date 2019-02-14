@@ -3,6 +3,7 @@ package com.example.android.mybakery.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     public IngredientsAdapter(Recipe recipe) {
         ingredients=recipe.getIngredientList();
 
+
+
     }
 
 
@@ -38,13 +41,15 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         final boolean shouldAttachToParentImmediately = false;
 
         View view= layoutInflater
-                .inflate(R.layout.ingredient_item,viewGroup,false);
+                .inflate(R.layout.ingredient_item,viewGroup,shouldAttachToParentImmediately);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull IngredientsAdapter.ViewHolder viewHolder, int i) {
         String iTitle=ingredients.get(i).getIngredient();
+        Log.d("ingredientsss", String.valueOf(iTitle));
+
         String  measure=ingredients.get(i).getMeasure();
         double quantity=ingredients.get(i).getQuantity();
         String amount;

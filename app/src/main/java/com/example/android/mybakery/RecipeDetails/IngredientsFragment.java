@@ -1,9 +1,11 @@
 package com.example.android.mybakery.RecipeDetails;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,10 @@ public class IngredientsFragment extends Fragment {
 
     public IngredientsFragment() {
     }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -31,6 +37,7 @@ public class IngredientsFragment extends Fragment {
     private void initRecyclerView(RecipeDetailsActivity RecipeDetailsActivity, View rootView) {
         RecyclerView recyclerView=rootView.findViewById(R.id.rv_Ingredients_List);
        //ya5od el ingredients list
+        Log.d("ingredientsss", String.valueOf(RecipeDetailsActivity.mrecipe));
 
         IngredientsAdapter ingredientsAdapter=new IngredientsAdapter(RecipeDetailsActivity.mrecipe);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());

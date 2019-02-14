@@ -22,6 +22,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Intent intent=getIntent();
         if(intent.hasExtra(getString(R.string.recipes_tag))){
             mrecipe = (Recipe) intent.getSerializableExtra(getString(R.string.recipes_tag));
@@ -37,7 +38,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragment.recipe=mrecipe;
             fragmentManager.beginTransaction()
-                    .replace(R.id.Ingredients_list,fragment)
+                    .replace(R.id.recipe_ingredients_fragment,fragment)
                     .commit();
 
 
