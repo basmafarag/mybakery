@@ -31,6 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <fragment android:name="com.example.android.mybakery.RecipeDetails.StepsFragment"
+            android:id="@+id/recipe_steps_fragment"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
     </LinearLayout>
 
 </ScrollView>

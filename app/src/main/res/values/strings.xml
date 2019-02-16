@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">my Bakery</string>
     <string name="recipes_tag" formatted="false">recipes</string>
+    <string name="step_index_tag" translatable="false">step_index</string>
+    <string name="recipe_tag" translatable="false">recipe</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">r%1$s %2$s</string>

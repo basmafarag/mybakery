@@ -42,11 +42,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         View view= layoutInflater
                 .inflate(R.layout.ingredient_item,viewGroup,shouldAttachToParentImmediately);
+
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull IngredientsAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         String iTitle=ingredients.get(i).getIngredient();
         Log.d("ingredientsss", String.valueOf(iTitle));
 
@@ -54,13 +55,16 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         double quantity=ingredients.get(i).getQuantity();
         String amount;
        // amount = context.getString(R.string.recipes_tag,Double.toString(quantity),measure);
+            viewHolder.ingredientTitle.setText(iTitle);
+            viewHolder.ingredientAmount.setText(measure);
 
-        viewHolder.ingredientTitle.setText(iTitle);
-        viewHolder.ingredientAmount.setText(measure);
     }
 
     @Override
     public int getItemCount() {
+        if(ingredients==null){
+            return 0;
+        }
         return ingredients.size();
     }
 
