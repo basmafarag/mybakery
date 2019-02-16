@@ -33,7 +33,7 @@ public class RecipeStepDetails extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             recipeStepDetailsFragment.recipe = recipe;
             fragmentManager.beginTransaction()
-                    .replace(R.id.recipe_ingredients_fragment, recipeStepDetailsFragment)
+                    .replace(R.id.recipe__fragment, recipeStepDetailsFragment)
                     .commit();
             setContentView(R.layout.activity_recipe_step_details);
         }

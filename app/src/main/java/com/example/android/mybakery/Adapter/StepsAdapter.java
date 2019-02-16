@@ -72,6 +72,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
                 super(itemView);
                 stepIndex = itemView.findViewById(R.id.tv_step_num);
                 stepTitle = itemView.findViewById(R.id.tv_step);
+                stepTitle.setOnClickListener(this);
             }
         @Override
         public void onClick(View view) {
