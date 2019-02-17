@@ -3,6 +3,8 @@
     <string name="recipes_tag" formatted="false">recipes</string>
     <string name="step_index_tag" translatable="false">step_index</string>
     <string name="recipe_tag" translatable="false">recipe</string>
+    <string name="exo_player_position_tag">exo_player_position</string>
+    <string name="exo_player_play_when_ready_tag">exo_player_play_when_ready</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">r%1$s %2$s</string>

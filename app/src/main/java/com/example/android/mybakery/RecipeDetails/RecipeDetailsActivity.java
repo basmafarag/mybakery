@@ -22,7 +22,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements StepsFra
     private ArrayList<Recipe> recipe;
 
     public static Recipe mrecipe;
-    int mStepIndex;
+    public static int mStepIndex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
