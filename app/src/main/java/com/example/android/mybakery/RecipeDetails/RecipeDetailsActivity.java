@@ -48,12 +48,9 @@ public class RecipeDetailsActivity extends AppCompatActivity implements StepsFra
                     .replace(R.id.recipe_ingredients_fragment,fragment)
                     .commit();
 
-           Bundle arguments=new Bundle();
-
             StepsFragment stepsFragment=new StepsFragment();
-            arguments.putInt("step_index",mStepIndex);
-            mrecipe= (Recipe) arguments.getSerializable("recipe");
-            //stepsFragment.recipe=mrecipe;
+
+            stepsFragment.recipe=mrecipe;
             fragmentManager.beginTransaction()
                     .replace(R.id.recipe_steps_fragment,stepsFragment);
 

@@ -30,6 +30,12 @@ public class RecipeStepDetails extends AppCompatActivity {
 
 
             RecipeStepDetailsFragment recipeStepDetailsFragment = new RecipeStepDetailsFragment();
+            Bundle arguments=new Bundle();
+
+            arguments.putInt("step_index",stepIndex);
+            arguments.putSerializable("recipe",recipe);
+            recipeStepDetailsFragment.setArguments(arguments);
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             recipeStepDetailsFragment.recipe = recipe;
             fragmentManager.beginTransaction()

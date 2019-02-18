@@ -58,7 +58,6 @@ public class RecipeStepDetailsFragment extends Fragment {
 
         }
         else{
-            if(getActivity() instanceof RecipeDetailsActivity){
                 RecipeDetailsActivity activity=(RecipeDetailsActivity) getActivity();
                 //stepIndex=activity.mStepIndex;
                 stepIndex=getArguments().getInt("step_index");
@@ -67,7 +66,7 @@ public class RecipeStepDetailsFragment extends Fragment {
 
                 recipe=(Recipe)getArguments().getSerializable("recipe");
                 exoPlayerPlayWhenReady=true;
-            }
+
                     }
         descriptionTextView=rootView.findViewById(R.id.tv_step_description);
         descriptionTextView.setText(recipe.getStepList().get(stepIndex).getDescription());
