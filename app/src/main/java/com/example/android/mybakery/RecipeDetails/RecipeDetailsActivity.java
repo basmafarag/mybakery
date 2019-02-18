@@ -21,8 +21,8 @@ public class RecipeDetailsActivity extends AppCompatActivity implements StepsFra
     static String SELECTED_RECIPES="Selected_Recipes";
     private ArrayList<Recipe> recipe;
 
-    public static Recipe mrecipe;
-    public static int mStepIndex;
+    public  Recipe mrecipe;
+    public  int mStepIndex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +48,12 @@ public class RecipeDetailsActivity extends AppCompatActivity implements StepsFra
                     .replace(R.id.recipe_ingredients_fragment,fragment)
                     .commit();
 
+           Bundle arguments=new Bundle();
+
             StepsFragment stepsFragment=new StepsFragment();
-            stepsFragment.recipe=mrecipe;
+            arguments.putInt("step_index",mStepIndex);
+            mrecipe= (Recipe) arguments.getSerializable("recipe");
+            //stepsFragment.recipe=mrecipe;
             fragmentManager.beginTransaction()
                     .replace(R.id.recipe_steps_fragment,stepsFragment);
 

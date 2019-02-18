@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,8 @@ public class RecipeStepDetailsFragment extends Fragment {
 
         if(savedInstanceState!=null){
             stepIndex=savedInstanceState.getInt("step_index");
+            Log.d("heloo ", String.valueOf(stepIndex));
+
             recipe=(Recipe) savedInstanceState.getSerializable("recipe");
             exoPlayerPosition=savedInstanceState.getLong("exo_player_postion");
             exoPlayerPlayWhenReady=savedInstanceState.getBoolean("exo_player_play_when_ready");
@@ -57,13 +60,20 @@ public class RecipeStepDetailsFragment extends Fragment {
         else{
             if(getActivity() instanceof RecipeDetailsActivity){
                 RecipeDetailsActivity activity=(RecipeDetailsActivity) getActivity();
-                stepIndex=activity.mStepIndex;
-                recipe=activity.mrecipe;
+                //stepIndex=activity.mStepIndex;
+                stepIndex=getArguments().getInt("step_index");
+
+                Log.d("heloo1", String.valueOf(stepIndex));
+
+                recipe=(Recipe)getArguments().getSerializable("recipe");
                 exoPlayerPlayWhenReady=true;
             }
                     }
         descriptionTextView=rootView.findViewById(R.id.tv_step_description);
         descriptionTextView.setText(recipe.getStepList().get(stepIndex).getDescription());
+        Log.d("heloo2", String.valueOf(descriptionTextView));
+
+
         intialization();
                 // Inflate the layout for this fragment
         return rootView;
@@ -71,11 +81,16 @@ public class RecipeStepDetailsFragment extends Fragment {
     private void intialization(){
         if(mExoplayer !=null) mExoplayer.stop();
         String URL=recipe.getStepList().get(stepIndex).getVideoURL();
+        Log.d("heloo3", String.valueOf(stepIndex));
+
         if(URL==null || URL.isEmpty()){
             mPlayerView.setVisibility(View.GONE);
+            Log.d("heloo4", String.valueOf(stepIndex));
+
         }
         else{
             mPlayerView.setVisibility(View.VISIBLE);
+            Log.d("heloo5", String.valueOf(stepIndex));
 
             mExoplayer= ExoPlayerFactory.newSimpleInstance(getContext(),new DefaultTrackSelector(),new DefaultLoadControl());
             mPlayerView.setPlayer(mExoplayer);
@@ -96,11 +111,11 @@ public class RecipeStepDetailsFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(getString(R.string.step_index_tag), stepIndex);
-        outState.putSerializable(getString(R.string.recipe_tag), recipe);
+      outState.putInt(getString(R.string.step_index_tag), stepIndex);
+       // outState.putSerializable(getString(R.string.recipe_tag), recipe);
 
         if (mExoplayer != null) {
-            saveExoPlayerState(outState);
+         //   saveExoPlayerState(outState);
         }
     }
 
