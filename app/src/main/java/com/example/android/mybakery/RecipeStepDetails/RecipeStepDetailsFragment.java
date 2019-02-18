@@ -58,7 +58,6 @@ public class RecipeStepDetailsFragment extends Fragment {
 
         }
         else{
-                RecipeDetailsActivity activity=(RecipeDetailsActivity) getActivity();
                 //stepIndex=activity.mStepIndex;
                 stepIndex=getArguments().getInt("step_index");
 

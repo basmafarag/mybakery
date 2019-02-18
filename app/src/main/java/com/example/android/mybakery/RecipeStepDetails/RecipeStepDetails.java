@@ -37,7 +37,7 @@ public class RecipeStepDetails extends AppCompatActivity {
             recipeStepDetailsFragment.setArguments(arguments);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            recipeStepDetailsFragment.recipe = recipe;
+            //recipeStepDetailsFragment.recipe = recipe;
             fragmentManager.beginTransaction()
                     .replace(R.id.recipe__fragment, recipeStepDetailsFragment)
                     .commit();

@@ -21,7 +21,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements StepsFra
     static String SELECTED_RECIPES="Selected_Recipes";
     private ArrayList<Recipe> recipe;
 
-    public  Recipe mrecipe;
+    public static Recipe mrecipe;
     public  int mStepIndex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
