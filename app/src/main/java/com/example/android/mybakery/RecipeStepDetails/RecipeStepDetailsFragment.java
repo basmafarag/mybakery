@@ -44,6 +44,9 @@ public class RecipeStepDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View rootView=inflater.inflate(R.layout.fragment_recipe_step_details, container, false);
+        mPlayerView=rootView.findViewById(R.id.player_view);
+
         if(savedInstanceState!=null){
             stepIndex=savedInstanceState.getInt("step_index");
             recipe=(Recipe) savedInstanceState.getSerializable("recipe");
@@ -58,24 +61,29 @@ public class RecipeStepDetailsFragment extends Fragment {
                 recipe=activity.mrecipe;
                 exoPlayerPlayWhenReady=true;
             }
-            descriptionTextView.findViewById(R.id.tv_step_description);
-            descriptionTextView.setText(recipe.getStepList().get(stepIndex).getDescription());
-        }
+                    }
+        descriptionTextView=rootView.findViewById(R.id.tv_step_description);
+        descriptionTextView.setText(recipe.getStepList().get(stepIndex).getDescription());
+        intialization();
+                // Inflate the layout for this fragment
+        return rootView;
+    }
+    private void intialization(){
         if(mExoplayer !=null) mExoplayer.stop();
         String URL=recipe.getStepList().get(stepIndex).getVideoURL();
         if(URL==null || URL.isEmpty()){
             mPlayerView.setVisibility(View.GONE);
         }
         else{
+            mPlayerView.setVisibility(View.VISIBLE);
+
             mExoplayer= ExoPlayerFactory.newSimpleInstance(getContext(),new DefaultTrackSelector(),new DefaultLoadControl());
-            mPlayerView.findViewById(R.id.player_view);
             mPlayerView.setPlayer(mExoplayer);
             mExoplayer.prepare(getMediaSource(URL));
             mExoplayer.seekTo(exoPlayerPosition);
             mExoplayer.setPlayWhenReady(exoPlayerPlayWhenReady);
         }
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recipe_step_details, container, false);
+
     }
     @NonNull
     private MediaSource getMediaSource(String videoURL) {
@@ -100,5 +108,48 @@ public class RecipeStepDetailsFragment extends Fragment {
         outState.putLong(getString(R.string.exo_player_position_tag), mExoplayer.getCurrentPosition());
         outState.putBoolean(getString(R.string.exo_player_play_when_ready_tag), mExoplayer.getPlayWhenReady());
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mExoplayer != null) {
+            pauseExoPlayerState();
+        }
+    }
+
+    private void pauseExoPlayerState() {
+        exoPlayerPlayWhenReady = mExoplayer.getPlayWhenReady();
+        exoPlayerPosition = mExoplayer.getCurrentPosition();
+        mExoplayer.release();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mExoplayer!=null) {
+            mExoplayer.stop();
+            mExoplayer.release();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mExoplayer!=null) {
+            mExoplayer.stop();
+            mExoplayer.release();
+            mExoplayer=null;
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mExoplayer!=null) {
+            mExoplayer.stop();
+            mExoplayer.release();
+        }
+    }
+
+
 
 }
