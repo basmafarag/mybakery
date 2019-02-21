@@ -136,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
 
         mProgressBar.setVisibility(View.INVISIBLE);
         swipeContainer.setRefreshing(false);
+        mIdlingResource.setIdleState(true);
+
 
     }
 
@@ -144,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         mRecipesAdapter.notifyDataSetChanged();
         mProgressBar.setVisibility(View.INVISIBLE);
         swipeContainer.setRefreshing(false);
+        mIdlingResource.setIdleState(true);
+
 
     }
 

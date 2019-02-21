@@ -14,11 +14,13 @@ public class SimpleIdlingResources implements IdlingResource {
 
     @Override
     public String getName() {
+
         return this.getClass().getName();
     }
 
     @Override
     public boolean isIdleNow() {
+
         return mIsIdleNow.get();
     }
 
