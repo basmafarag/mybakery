@@ -2,6 +2,9 @@ package com.example.android.mybakery.Recipe;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +27,7 @@ import com.example.android.mybakery.Adapter.RecipesAdapter;
 import java.io.Serializable;
 import java.util.List;
 import retrofit2.Call;
-
+import com.example.android.mybakery.UItest.SimpleIdlingResources;
 public class MainActivity extends AppCompatActivity implements RecipesAdapter.RecipesOnClickHandler {
     RecyclerView mRecyclerView ;
     RecipesAdapter mRecipesAdapter;
@@ -32,7 +35,16 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeContainer;
     private List<Recipe> recipes;
-
+    @Nullable
+    private SimpleIdlingResources mIdlingResource;
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResources();
+        }
+        return mIdlingResource;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +62,13 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         mRecyclerView.setHasFixedSize(true);
         //----------------initRecyclerView-----------------------
 
+        getIdlingResource();
 
         if (savedInstanceState == null || !savedInstanceState.containsKey(getString(R.string.recipes_tag))) {
             mProgressBar.setVisibility(View.VISIBLE);
             //----------------------getRecipes------------------------------
+            mIdlingResource.setIdleState(false);
+
             ApiService apiService = RetroClient.getApiService();
             Call<List<Recipe>> call = apiService.getRecipes();
             call.enqueue(new Callback<List<Recipe>>() {

@@ -23,7 +23,9 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.example.android.mybakery.Model.Step;
 
+import android.widget.Button;
 import  android.widget.TextView;
 public class RecipeStepDetailsFragment extends Fragment {
     static Recipe recipe;
@@ -35,6 +37,8 @@ public class RecipeStepDetailsFragment extends Fragment {
     private SimpleExoPlayer mExoplayer;
     private long exoPlayerPosition;
     private boolean exoPlayerPlayWhenReady;
+    Button prev;
+    Button next;
 
 
     public RecipeStepDetailsFragment() {
@@ -47,6 +51,8 @@ public class RecipeStepDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_recipe_step_details, container, false);
         mPlayerView=rootView.findViewById(R.id.player_view);
+        prev=rootView.findViewById(R.id.prev_button);
+        next=rootView.findViewById(R.id.next_button);
 
         if(savedInstanceState!=null){
             stepIndex=savedInstanceState.getInt("step_index");
@@ -73,9 +79,52 @@ public class RecipeStepDetailsFragment extends Fragment {
 
 
         intialization();
+        PrevButton();
+        nextButton();
+
                 // Inflate the layout for this fragment
         return rootView;
     }
+
+    private void PrevButton() {
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (stepIndex > 0) stepIndex--;
+                Step step = recipe.getStepList().get(stepIndex);
+                descriptionTextView.setText(step.getDescription());
+                intialization();
+                if (stepIndex <= 0) {
+                    prev.setVisibility(View.GONE);
+                    next.setVisibility(View.VISIBLE);
+                }else
+                    prev.setVisibility(View.VISIBLE);
+                    next.setVisibility(View.VISIBLE);
+
+            }
+        });
+    }
+        private void nextButton(){
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    stepIndex++;
+                    Step step=recipe.getStepList().get(stepIndex);
+                    descriptionTextView.setText(step.getDescription());
+                    intialization();
+                    if(stepIndex>=recipe.getStepList().size()-1){
+                        next.setVisibility(View.GONE);
+                        prev.setVisibility(View.VISIBLE);
+                    }else{
+                        next.setVisibility(View.VISIBLE);
+                        prev.setVisibility(View.VISIBLE);
+                    }
+
+                }
+            });
+
+
+        }
     private void intialization(){
         if(mExoplayer !=null) mExoplayer.stop();
         String URL=recipe.getStepList().get(stepIndex).getVideoURL();
@@ -98,6 +147,7 @@ public class RecipeStepDetailsFragment extends Fragment {
         }
 
     }
+
     @NonNull
     private MediaSource getMediaSource(String videoURL) {
         String userAgent = Util.getUserAgent(getContext(), getString(R.string.app_name));

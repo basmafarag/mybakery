@@ -3,7 +3,9 @@
     package="com.example.android.mybakery">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="23" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecipeDetails.RecipeDetailsActivity" />
-        <activity android:name=".RecipeStepDetails.RecipeStepDetails"></activity>
+        <activity android:name=".RecipeStepDetails.RecipeStepDetails" />
+
     </application>
 
 </manifest>
