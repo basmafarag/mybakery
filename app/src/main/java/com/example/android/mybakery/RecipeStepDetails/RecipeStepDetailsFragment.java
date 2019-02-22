@@ -1,10 +1,12 @@
 package com.example.android.mybakery.RecipeStepDetails;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +28,12 @@ import com.google.android.exoplayer2.util.Util;
 import com.example.android.mybakery.Model.Step;
 
 import android.widget.Button;
+import android.widget.LinearLayout;
 import  android.widget.TextView;
 public class RecipeStepDetailsFragment extends Fragment {
-    static Recipe recipe;
-    static int stepIndex;
-
+    public  static Recipe recipe;
+    public static int stepIndex;
+    public static boolean isLargeScreen = false;
     TextView descriptionTextView;
 
     SimpleExoPlayerView mPlayerView;
@@ -79,8 +82,14 @@ public class RecipeStepDetailsFragment extends Fragment {
 
 
         intialization();
-        PrevButton();
+        if (isLargeScreen) {
+            next.setVisibility(View.GONE);
+            prev.setVisibility(View.GONE);
+
+        }
+            PrevButton();
         nextButton();
+        setFullscreenVideoConfigurationIfLandscapeAndSmallScreen();
 
                 // Inflate the layout for this fragment
         return rootView;
@@ -148,6 +157,28 @@ public class RecipeStepDetailsFragment extends Fragment {
 
     }
 
+    private void setFullscreenVideoConfigurationIfLandscapeAndSmallScreen() {
+        boolean isLandscapeMode = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        if (isLandscapeMode && !isLargeScreen) {
+            setPlayerFullHeight();
+            hideNavigationButtons();
+        }
+    }
+
+    private void hideNavigationButtons() {
+        next.setVisibility(View.GONE);
+        prev.setVisibility(View.GONE);
+    }
+
+    private void setPlayerFullHeight() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        mPlayerView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
+    }
+
+
+
     @NonNull
     private MediaSource getMediaSource(String videoURL) {
         String userAgent = Util.getUserAgent(getContext(), getString(R.string.app_name));
@@ -160,10 +191,12 @@ public class RecipeStepDetailsFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
       outState.putInt(getString(R.string.step_index_tag), stepIndex);
+      outState.putSerializable("Recipe",recipe);
+
        // outState.putSerializable(getString(R.string.recipe_tag), recipe);
 
         if (mExoplayer != null) {
-         //   saveExoPlayerState(outState);
+           saveExoPlayerState(outState);
         }
     }
 
@@ -186,33 +219,26 @@ public class RecipeStepDetailsFragment extends Fragment {
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mExoplayer!=null) {
-            mExoplayer.stop();
-            mExoplayer.release();
-        }
+    public void onResume() {
+        super.onResume();
+        intialization();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mExoplayer!=null) {
-            mExoplayer.stop();
-            mExoplayer.release();
-            mExoplayer=null;
-        }
+        releasePlayer();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mExoplayer!=null) {
+    private void releasePlayer() {
+        if (mExoplayer != null) {
             mExoplayer.stop();
             mExoplayer.release();
+            mExoplayer = null;
         }
     }
-
-
-
 }
+
+
+
+

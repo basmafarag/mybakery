@@ -17,16 +17,35 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Recipe.MainActivity">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="true">
+        <activity android:name=".Recipe.MainActivity"
+            android:launchMode="singleTop">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeDetails.RecipeDetailsActivity" />
-        <activity android:name=".RecipeStepDetails.RecipeStepDetails" />
+
+        <activity
+            android:name=".RecipeDetails.RecipeDetailsActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".Recipe.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Recipe.MainActivity"/>
+        </activity>
+
+        <activity
+            android:name=".RecipeStepDetails.RecipeStepDetails"
+            android:launchMode="singleTop"
+            android:parentActivityName=".RecipeDetails.RecipeDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".RecipeDetails.RecipeDetailsActivity"/>
+        </activity>
 
         <receiver android:name=".Widget.RecipeWidget">
             <intent-filter>
