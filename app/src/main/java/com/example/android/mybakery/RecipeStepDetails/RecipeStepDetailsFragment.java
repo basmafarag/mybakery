@@ -77,7 +77,9 @@ public class RecipeStepDetailsFragment extends Fragment {
 
                     }
         descriptionTextView=rootView.findViewById(R.id.tv_step_description);
-        descriptionTextView.setText(recipe.getStepList().get(stepIndex).getDescription());
+        if(recipe!=null && recipe.getStepList()!=null && recipe.getStepList().get(stepIndex)!=null) {
+            descriptionTextView.setText(recipe.getStepList().get(stepIndex).getDescription());
+        }
         Log.d("heloo2", String.valueOf(descriptionTextView));
 
 
@@ -136,7 +138,10 @@ public class RecipeStepDetailsFragment extends Fragment {
         }
     private void intialization(){
         if(mExoplayer !=null) mExoplayer.stop();
-        String URL=recipe.getStepList().get(stepIndex).getVideoURL();
+        if(recipe!=null && recipe.getStepList()!=null && recipe.getStepList().get(stepIndex)!=null) {
+
+            String URL = recipe.getStepList().get(stepIndex).getVideoURL();
+
         Log.d("heloo3", String.valueOf(stepIndex));
 
         if(URL==null || URL.isEmpty()){
@@ -155,7 +160,7 @@ public class RecipeStepDetailsFragment extends Fragment {
             mExoplayer.setPlayWhenReady(exoPlayerPlayWhenReady);
         }
 
-    }
+    }}
 
     private void setFullscreenVideoConfigurationIfLandscapeAndSmallScreen() {
         boolean isLandscapeMode = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
