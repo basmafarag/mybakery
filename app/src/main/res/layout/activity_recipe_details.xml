@@ -25,6 +25,7 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
+
         <fragment android:name="com.example.android.mybakery.RecipeDetails.IngredientsFragment"
             android:id="@+id/recipe_ingredients_fragment"
             android:layout_weight="1"

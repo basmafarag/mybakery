@@ -48,11 +48,9 @@ public class RecipeActivityTest {
     public void testTest() {
         int RECYCLER_VIEW_FIRST_ITEM = 0;
         String NUTELLA_PIE = "Nutella Pie";
-        String NUTELLA_PIE_STEP = "2. Prep the cookie crust.";
         onView(withId(R.id.recipe_list)).check(matches(hasDescendant(withText(NUTELLA_PIE))));
 
         onView(withId(R.id.recipe_list)).perform(RecyclerViewActions.actionOnItemAtPosition(RECYCLER_VIEW_FIRST_ITEM, click()));
-        onView(withText(NUTELLA_PIE_STEP)).check(matches(isDisplayed()));
     }
 
     @After

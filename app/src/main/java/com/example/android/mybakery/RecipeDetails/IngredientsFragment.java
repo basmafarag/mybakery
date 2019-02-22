@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.mybakery.Adapter.IngredientsAdapter;
 import com.example.android.mybakery.Model.Recipe;
@@ -16,7 +18,7 @@ import com.example.android.mybakery.R;
 
 public class IngredientsFragment extends Fragment {
         Recipe recipe;
-
+        TextView IngredientsWidget;
 
     public IngredientsFragment() {
     }
@@ -31,8 +33,19 @@ public class IngredientsFragment extends Fragment {
         RecipeDetailsActivity RecipeDetailsActivity =(RecipeDetailsActivity) getActivity();
 
         final View rootView=inflater.inflate(R.layout.fragment_ingredients,container,false);
+        IngredientsWidget=rootView.findViewById(R.id.widget);
         initRecyclerView(RecipeDetailsActivity,rootView);
+        initIngredientsTextViewOnClickListener();
+
         return rootView;
+    }
+    private void initIngredientsTextViewOnClickListener() {
+        IngredientsWidget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), getString(R.string.widget), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void initRecyclerView(RecipeDetailsActivity RecipeDetailsActivity, View rootView) {

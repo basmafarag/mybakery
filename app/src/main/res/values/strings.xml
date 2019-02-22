@@ -7,6 +7,10 @@
     <string name="exo_player_play_when_ready_tag">exo_player_play_when_ready</string>
     <string name="next_button">Next</string>
     <string name="prev_button">Previous</string>
+    <string name="widget">ingredients widget</string>
+    <string name="no_recipe_selected">No recipe selected yet</string>
+    <string name="widget_item_format">%1$d. %2$s, %3$s %4$s</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">r%1$s %2$s</string>
     <string name="appwidget_text">EXAMPLE</string>
