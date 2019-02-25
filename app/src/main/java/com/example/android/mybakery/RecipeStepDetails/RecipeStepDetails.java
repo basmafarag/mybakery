@@ -1,6 +1,7 @@
 package com.example.android.mybakery.RecipeStepDetails;
 
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,10 +32,10 @@ public class RecipeStepDetails extends AppCompatActivity {
 
 
         }
-        //if (savedInstanceState == null) {
 
 
             RecipeStepDetailsFragment recipeStepDetailsFragment = new RecipeStepDetailsFragment();
+
             Bundle arguments=new Bundle();
 
             arguments.putInt("step_index",stepIndex);
@@ -58,5 +59,9 @@ public class RecipeStepDetails extends AppCompatActivity {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(getString(R.string.step_index_tag), stepIndex);
+    }
 
-}
+    }

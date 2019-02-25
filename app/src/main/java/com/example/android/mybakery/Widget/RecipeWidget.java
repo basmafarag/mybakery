@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.android.mybakery.Model.Ingredient;
@@ -32,6 +33,7 @@ public class RecipeWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.appwidget_text, text);
 
         Intent intent = new Intent(context, RecipeDetailsActivity.class);
+        intent.putExtra("Recipe",RecipeDetailsActivity.mrecipe);
         views.setRemoteAdapter(R.id.lv_ingredients_widget, intent);
 
         // Instruct the widget manager to update the widget
@@ -64,6 +66,8 @@ public class RecipeWidget extends AppWidgetProvider {
             text = recipe.getName();
             ingredients = recipe.getIngredientList();
         } else {
+            Log.d("widgettttt   ", String.valueOf(intent.getStringExtra("recipe")));
+
             text = context.getString(R.string.no_recipe_selected);
         }
 

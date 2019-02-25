@@ -1,6 +1,7 @@
 package com.example.android.mybakery.RecipeDetails;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.example.android.mybakery.Adapter.IngredientsAdapter;
 import com.example.android.mybakery.Model.Recipe;
 import com.example.android.mybakery.R;
+import com.example.android.mybakery.Widget.RecipeWidget;
 
 public class IngredientsFragment extends Fragment {
         Recipe recipe;
@@ -44,8 +46,16 @@ public class IngredientsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), getString(R.string.widget), Toast.LENGTH_LONG).show();
+               // sendRecipeToWidget();
+
             }
         });
+    }
+    private void sendRecipeToWidget() {
+      //  Intent intent = new Intent(this, RecipeWidget.class);
+       // intent.putExtra(getString(R.string.recipe_tag), recipe);
+        //intent.setAction(getString(R.string.widget_intent_action));
+        //sendBroadcast(intent);
     }
 
     private void initRecyclerView(RecipeDetailsActivity RecipeDetailsActivity, View rootView) {

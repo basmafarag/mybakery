@@ -26,8 +26,10 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.example.android.mybakery.Model.Step;
+import com.squareup.picasso.Picasso;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import  android.widget.TextView;
 public class RecipeStepDetailsFragment extends Fragment {
@@ -42,6 +44,8 @@ public class RecipeStepDetailsFragment extends Fragment {
     private boolean exoPlayerPlayWhenReady;
     Button prev;
     Button next;
+    ImageView mThumbnailImage;
+    TextView noVideoText;
 
 
     public RecipeStepDetailsFragment() {
@@ -56,8 +60,11 @@ public class RecipeStepDetailsFragment extends Fragment {
         mPlayerView=rootView.findViewById(R.id.player_view);
         prev=rootView.findViewById(R.id.prev_button);
         next=rootView.findViewById(R.id.next_button);
+        mThumbnailImage=rootView.findViewById(R.id.iv_thumbnail_image);
+        noVideoText=rootView.findViewById(R.id.tv_no_video_available);
 
         if(savedInstanceState!=null){
+            //-------------restore savedInstance------------------
             stepIndex=savedInstanceState.getInt("step_index");
             Log.d("heloo ", String.valueOf(stepIndex));
 
@@ -67,7 +74,7 @@ public class RecipeStepDetailsFragment extends Fragment {
 
         }
         else{
-                //stepIndex=activity.mStepIndex;
+                //--------------get Params---------------
                 stepIndex=getArguments().getInt("step_index");
 
                 Log.d("heloo1", String.valueOf(stepIndex));
@@ -89,7 +96,7 @@ public class RecipeStepDetailsFragment extends Fragment {
             prev.setVisibility(View.GONE);
 
         }
-            PrevButton();
+        PrevButton();
         nextButton();
         setFullscreenVideoConfigurationIfLandscapeAndSmallScreen();
 
@@ -145,11 +152,14 @@ public class RecipeStepDetailsFragment extends Fragment {
         Log.d("heloo3", String.valueOf(stepIndex));
 
         if(URL==null || URL.isEmpty()){
-            mPlayerView.setVisibility(View.GONE);
-            Log.d("heloo4", String.valueOf(stepIndex));
-
+            initializeThumbnailImage();
         }
         else{
+            //-----------initialize exoPlayer-----------
+            noVideoText.setVisibility(View.GONE);
+            mThumbnailImage.setVisibility(View.GONE);
+            mPlayerView.setVisibility(View.VISIBLE);
+
             mPlayerView.setVisibility(View.VISIBLE);
             Log.d("heloo5", String.valueOf(stepIndex));
 
@@ -161,6 +171,23 @@ public class RecipeStepDetailsFragment extends Fragment {
         }
 
     }}
+    private void initializeThumbnailImage() {
+        String recipeThumbnailUrl = recipe.getStepList().get(stepIndex).getThumbnailURL();
+        if (recipeThumbnailUrl == null || recipeThumbnailUrl.isEmpty()) {
+            mThumbnailImage.setVisibility(View.GONE);
+            noVideoText.setVisibility(View.VISIBLE);
+            mPlayerView.setVisibility(View.GONE);
+        } else {
+            displayThumbnail(recipeThumbnailUrl);
+        }
+    }
+
+    private void displayThumbnail(String recipeThumbnailUrl) {
+        Picasso.get().load(recipeThumbnailUrl).placeholder(R.drawable.invalid_thumbnail)
+                .error(R.drawable.invalid_thumbnail).into(mThumbnailImage);
+        mThumbnailImage.setVisibility(View.VISIBLE);
+        mPlayerView.setVisibility(View.GONE);
+    }
 
     private void setFullscreenVideoConfigurationIfLandscapeAndSmallScreen() {
         boolean isLandscapeMode = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
@@ -222,7 +249,14 @@ public class RecipeStepDetailsFragment extends Fragment {
         exoPlayerPosition = mExoplayer.getCurrentPosition();
         mExoplayer.release();
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Util.SDK_INT > 23) {
+            intialization();
 
+        }
+    }
     @Override
     public void onResume() {
         super.onResume();
