@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class RecipeWidget extends AppWidgetProvider {
 
-    private static final String RECIPE = "mRecipe";
+    private static final String RECIPE = "recipe";
     static List<Ingredient> ingredients = new ArrayList<>();
     private static String text;
 
@@ -61,12 +61,19 @@ public class RecipeWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        Log.d("widgettttt   ", "recieved");
         if (intent.hasExtra(RECIPE)) {
+            Log.d("widgettttt   ", "recieved iffffff");
             Recipe recipe = (Recipe) intent.getSerializableExtra("recipe");
             text = recipe.getName();
             ingredients = recipe.getIngredientList();
+            for(Ingredient ing : ingredients)
+            {
+                text += ing.getIngredient();
+                text += "\n";
+            }
         } else {
-            Log.d("widgettttt   ", String.valueOf(intent.getStringExtra("recipe")));
+            Log.d("widgettttt   ", ""+String.valueOf(intent.getStringExtra("recipe")));
 
             text = context.getString(R.string.no_recipe_selected);
         }

@@ -2,6 +2,7 @@ package com.example.android.mybakery.RecipeDetails;
 
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import com.example.android.mybakery.Widget.RecipeWidget;
 
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,15 +27,16 @@ public class RecipeDetailsActivity extends AppCompatActivity implements StepsFra
 
     public static Recipe mrecipe;
     public  int mStepIndex;
-    boolean mIsLargeScreen;
+    boolean isMasterDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //StepsFragment stepsFragment=new StepsFragment();
+        //isMasterDetails=stepsFragment.IsmasterDetail;
+
         if (savedInstanceState != null) {
             mStepIndex = savedInstanceState.getInt(getString(R.string.step_index_tag));
         }
-        int smallScreenDeviceColumns=1;
-        mIsLargeScreen = getResources().getInteger(R.integer.grid_columns) > smallScreenDeviceColumns;
         Intent intent=getIntent();
         if(intent.hasExtra(getString(R.string.recipes_tag))){
             mrecipe = (Recipe) intent.getSerializableExtra(getString(R.string.recipes_tag));
@@ -43,44 +46,31 @@ public class RecipeDetailsActivity extends AppCompatActivity implements StepsFra
 
         }
         setContentView(R.layout.activity_recipe_details);
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         if(savedInstanceState ==null) {
 
-            if (mIsLargeScreen) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-
-                StepsFragment stepsFragment = new StepsFragment();
-
-                stepsFragment.recipe = mrecipe;
-                fragmentManager.beginTransaction()
-                        .replace(R.id.recipe_steps_fragment, stepsFragment);
-
-                RecipeStepDetailsFragment recipeStepDetailsFragment=new RecipeStepDetailsFragment();
-                recipeStepDetailsFragment.stepIndex=0;
-                recipeStepDetailsFragment.recipe=mrecipe;
-                recipeStepDetailsFragment.isLargeScreen=true;
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.step_detail_fragment,recipeStepDetailsFragment);
-
-
-            } else {
                 IngredientsFragment fragment = new IngredientsFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
+            if(fragment !=null) {
                 fragment.recipe = mrecipe;
                 fragmentManager.beginTransaction()
                         .replace(R.id.recipe_ingredients_fragment, fragment)
                         .commit();
-
+            }
                 StepsFragment stepsFragment = new StepsFragment();
 
-                stepsFragment.recipe = mrecipe;
+
+            stepsFragment.recipe = mrecipe;
                 fragmentManager.beginTransaction()
                         .replace(R.id.recipe_steps_fragment, stepsFragment);
+
+            Log.d("isMasterDetails Recipe", String.valueOf(isMasterDetails));
+
 
             }
         }
 
-       }
+
 
 
 
@@ -88,18 +78,35 @@ public class RecipeDetailsActivity extends AppCompatActivity implements StepsFra
     public void onStepSelected(int stepIndex) {
         this.mStepIndex = stepIndex;
         Log.d("clicklistnerrrrr", String.valueOf(mStepIndex));
-        if (mIsLargeScreen) {
-            RecipeStepDetailsFragment recipeStepDetailFragment = new RecipeStepDetailsFragment();
-            RecipeStepDetailsFragment.stepIndex = stepIndex;
-            RecipeStepDetailsFragment.recipe = mrecipe;
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.step_detail_fragment, recipeStepDetailFragment).commit();
 
-        } else {
+        if (isMasterDetails) {
+            //TODO:
+
+            RecipeStepDetailsFragment recipeStepDetailsFragment = new RecipeStepDetailsFragment();
+
+            Bundle arguments=new Bundle();
+
+            if(recipe != null)
+            {
+                Log.d("heloo3", mrecipe.getName());
+            }
+            arguments.putInt("step_index",stepIndex);
+            arguments.putSerializable("recipe",mrecipe);
+            recipeStepDetailsFragment.setArguments(arguments);
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            //recipeStepDetailsFragment.recipe = recipe;
+            fragmentManager.beginTransaction()
+                    .replace(R.id.recipe__fragment, recipeStepDetailsFragment)
+                    .commit();
+                    } else {
+            Log.e(" basmaaaRecpieDetails", "index "+stepIndex);
+
             Intent intent = new Intent(this, RecipeStepDetails.class);
             intent.putExtra(getString(R.string.step_index_tag), stepIndex);
             intent.putExtra(getString(R.string.recipe_tag), mrecipe);
             startActivity(intent);
+
         }
     }
     private void sendRecipeToWidget() {

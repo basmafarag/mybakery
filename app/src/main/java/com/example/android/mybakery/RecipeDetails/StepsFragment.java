@@ -18,7 +18,7 @@ import com.example.android.mybakery.Model.Recipe;
 public class StepsFragment extends Fragment {
 
     Recipe recipe;
-
+public boolean IsmasterDetail;
     public StepsFragment(){
 
     }
@@ -34,6 +34,20 @@ public class StepsFragment extends Fragment {
 
         final View rootView=inflater.inflate(R.layout.fragment_steps,container,false);
         initRecyclerView(recipeDetailsActivity,rootView);
+        if(rootView.findViewById(R.id.viewDivider)!=null){
+            Log.d("ismasterdetailsss true", String.valueOf(IsmasterDetail));
+
+            //IsmasterDetail=true;
+            recipeDetailsActivity.isMasterDetails=true;
+            Log.d("ismasterdetailssss true", String.valueOf(IsmasterDetail));
+
+        }
+        else {
+            recipeDetailsActivity.isMasterDetails=false;
+
+            Log.d("ismasterdetailss falsee", String.valueOf(IsmasterDetail));
+
+        }
         return rootView;
     }
 

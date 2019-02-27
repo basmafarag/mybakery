@@ -35,7 +35,7 @@ import  android.widget.TextView;
 public class RecipeStepDetailsFragment extends Fragment {
     public  static Recipe recipe;
     public static int stepIndex;
-    public static boolean isLargeScreen = false;
+   // public static boolean isLargeScreen = false;
     TextView descriptionTextView;
 
     SimpleExoPlayerView mPlayerView;
@@ -63,39 +63,46 @@ public class RecipeStepDetailsFragment extends Fragment {
         mThumbnailImage=rootView.findViewById(R.id.iv_thumbnail_image);
         noVideoText=rootView.findViewById(R.id.tv_no_video_available);
 
+        stepIndex=getArguments().getInt("step_index");
+
+        recipe=(Recipe)getArguments().getSerializable("recipe");
+        exoPlayerPlayWhenReady=true;
+
         if(savedInstanceState!=null){
             //-------------restore savedInstance------------------
             stepIndex=savedInstanceState.getInt("step_index");
-            Log.d("heloo ", String.valueOf(stepIndex));
+            Log.d("heloo if ", String.valueOf(stepIndex));
 
             recipe=(Recipe) savedInstanceState.getSerializable("recipe");
             exoPlayerPosition=savedInstanceState.getLong("exo_player_postion");
             exoPlayerPlayWhenReady=savedInstanceState.getBoolean("exo_player_play_when_ready");
 
         }
-        else{
+        else if(savedInstanceState == null){
                 //--------------get Params---------------
-                stepIndex=getArguments().getInt("step_index");
+            //if
+            Log.d("heloo else ", String.valueOf(stepIndex));
+                //stepIndex=getArguments().getInt("step_index");
 
                 Log.d("heloo1", String.valueOf(stepIndex));
 
-                recipe=(Recipe)getArguments().getSerializable("recipe");
-                exoPlayerPlayWhenReady=true;
+                //recipe=(Recipe)getArguments().getSerializable("recipe");
+                //exoPlayerPlayWhenReady=true;
 
                     }
         descriptionTextView=rootView.findViewById(R.id.tv_step_description);
         if(recipe!=null && recipe.getStepList()!=null && recipe.getStepList().get(stepIndex)!=null) {
             descriptionTextView.setText(recipe.getStepList().get(stepIndex).getDescription());
         }
-        Log.d("heloo2", String.valueOf(descriptionTextView));
+        Log.d("heloo2", "index    "+stepIndex);
 
 
         intialization();
-        if (isLargeScreen) {
-            next.setVisibility(View.GONE);
-            prev.setVisibility(View.GONE);
-
-        }
+      //  if (isLargeScreen) {
+        //    next.setVisibility(View.GONE);
+  //          prev.setVisibility(View.GONE);
+//
+      //  }
         PrevButton();
         nextButton();
         setFullscreenVideoConfigurationIfLandscapeAndSmallScreen();
@@ -145,6 +152,10 @@ public class RecipeStepDetailsFragment extends Fragment {
         }
     private void intialization(){
         if(mExoplayer !=null) mExoplayer.stop();
+        if(recipe != null)
+        {
+            Log.d("heloo3", recipe.getName());
+        }
         if(recipe!=null && recipe.getStepList()!=null && recipe.getStepList().get(stepIndex)!=null) {
 
             String URL = recipe.getStepList().get(stepIndex).getVideoURL();
@@ -191,7 +202,7 @@ public class RecipeStepDetailsFragment extends Fragment {
 
     private void setFullscreenVideoConfigurationIfLandscapeAndSmallScreen() {
         boolean isLandscapeMode = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-        if (isLandscapeMode && !isLargeScreen) {
+        if (isLandscapeMode) {
             setPlayerFullHeight();
             hideNavigationButtons();
         }
@@ -205,7 +216,7 @@ public class RecipeStepDetailsFragment extends Fragment {
     private void setPlayerFullHeight() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
+        int height = displayMetrics.heightPixels-900;
         mPlayerView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
     }
 

@@ -43,8 +43,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
         Recipe recipe = recipes.get(position);
         holder.recipeTitleTextView.setText(recipe.getName());
         String recipeImage = recipe.getImage().isEmpty() ? null : recipe.getImage();
-        Picasso.get().load(recipeImage).placeholder(R.drawable.dessert)
-                .error(R.drawable.dessert).into(holder.recipeImageView);
+     //   Picasso.get().load(recipeImage).placeholder(R.drawable.dessert)
+       //         .error(R.drawable.dessert).into(holder.recipeImageView);
     }
 
     @Override

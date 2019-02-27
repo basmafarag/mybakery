@@ -46,16 +46,16 @@ public class IngredientsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), getString(R.string.widget), Toast.LENGTH_LONG).show();
-               // sendRecipeToWidget();
+               sendRecipeToWidget();
 
             }
         });
     }
     private void sendRecipeToWidget() {
-      //  Intent intent = new Intent(this, RecipeWidget.class);
-       // intent.putExtra(getString(R.string.recipe_tag), recipe);
-        //intent.setAction(getString(R.string.widget_intent_action));
-        //sendBroadcast(intent);
+        Intent intent = new Intent(getActivity(), RecipeWidget.class);
+        intent.putExtra(getString(R.string.recipe_tag), recipe);
+        intent.setAction(getString(R.string.widget_intent_action));
+        getActivity().sendBroadcast(intent);
     }
 
     private void initRecyclerView(RecipeDetailsActivity RecipeDetailsActivity, View rootView) {
